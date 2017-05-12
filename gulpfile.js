@@ -2,6 +2,7 @@ var babelify = require("babelify");
 var browserify = require("browserify");
 var gulp = require("gulp");
 var webpack = require("gulp-webpack");
+var path = require("path");
 var source = require("vinyl-source-stream");
 var nodeExternals = require("webpack-node-externals");
 var _webpack = require("webpack");
@@ -20,7 +21,11 @@ var buildVendor = function () {
             },
             module: {
                 loaders: [
-                    { test: /\.js$/, loader: "babel-loader" }
+                    {
+                        test: /\.js$/,
+                        loader: "babel-loader",
+                        exclude: [ path.resolve(__dirname, "node_modules") ]
+                    }
                 ]
             },
             output: {
@@ -39,13 +44,12 @@ var buildVendor = function () {
 var build = function () {
     gulp.src("components/main.js")
         .pipe(webpack({
-            entry: {
-                main: "./components/main.js",
-                vendor: externalLibraries,
-            },
             module: {
                 loaders: [
-                    { test: /\.js$/, loader: "babel-loader" }
+                    {
+                        test: /\.js$/,
+                        loader: "babel-loader"
+                    }
                 ]
             },
             output: {
