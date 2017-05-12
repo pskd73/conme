@@ -1,49 +1,58 @@
-var gulp = require("gulp");
-var browserify = require("browserify");
-var source = require("vinyl-source-stream");
 var babelify = require("babelify");
+var browserify = require("browserify");
+var gulp = require("gulp");
+var webpack = require("gulp-webpack");
+var source = require("vinyl-source-stream");
+var nodeExternals = require("webpack-node-externals");
+var _webpack = require("webpack");
 
 var externalLibraries = [
     "react",
-    "react-dom"
+    "react-dom",
+    "material-ui"
 ];
 
 var buildVendor = function () {
-    browserify({
-        require: externalLibraries,
-        debug: true,
-    })
-    .bundle()
-    .on("error", function (err) {
-        console.log(err);
-    })
-    .pipe(source("vendor.js"))
-    .pipe(gulp.dest("./public/build"))
-    .on("end", function () {
-        console.log("Vendor build created.");
-    });
+    gulp.src("components/main.js")
+        .pipe(webpack({
+            entry: {
+                vendor: externalLibraries,
+            },
+            module: {
+                loaders: [
+                    { test: /\.js$/, loader: "babel-loader" }
+                ]
+            },
+            output: {
+                filename: "[name].js"
+            },
+            plugins: [
+                new _webpack.optimize.CommonsChunkPlugin({
+                    name: "vendor",
+                    filename: "vendor.js"
+                })
+            ]
+        }))
+        .pipe(gulp.dest("public/build"));
 }
 
 var build = function () {
-    var bundle = browserify({
-        entries: "./components/main.js",
-        debug: true,
-    });
-
-    for (var i=0; i < externalLibraries.length; i++){
-        bundle.external(externalLibraries[i]);
-    }
-
-    bundle.transform("babelify", { presets: ["es2015", "react"] })
-    .bundle()
-    .on("error", function (error) {
-        console.log(error);
-    })
-    .pipe(source("bundle.js"))
-    .pipe(gulp.dest("./public/build"))
-    .on("end", function () {
-        console.log("Build created.")
-    });
+    gulp.src("components/main.js")
+        .pipe(webpack({
+            entry: {
+                main: "./components/main.js",
+                vendor: externalLibraries,
+            },
+            module: {
+                loaders: [
+                    { test: /\.js$/, loader: "babel-loader" }
+                ]
+            },
+            output: {
+                filename: "[name].js"
+            }
+        }))
+        .pipe(gulp.dest("public/build"));
 }
 
 gulp.task("build", function () {
@@ -51,12 +60,12 @@ gulp.task("build", function () {
 });
 
 gulp.task("watch", function () {
-    buildVendor();
+    // buildVendor();
     build();
     gulp.watch(["./components/**/*.js"], ["build"]);
 });
 
 gulp.task("default", function () {
-    buildVendor();
+    // buildVendor();
     build();
 });
