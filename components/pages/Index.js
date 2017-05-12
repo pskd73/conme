@@ -5,7 +5,7 @@ class Index extends Component {
     render() {
         return (
             <div>
-                Index page
+                This is Index page another go fi k as j j
             </div>
         );
     }
