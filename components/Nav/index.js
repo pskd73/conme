@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import { connect } from "react-redux";
-import { openSideMenu, closeSideMenu } from "./actions/ui";
+import { openSideMenu, closeSideMenu } from "../actions/ui";
+import RightSection from "./RightSection";
 
 class Nav extends Component {
     render() {
@@ -9,6 +10,12 @@ class Nav extends Component {
             <AppBar
                 title="ConMe"
                 onLeftIconButtonTouchTap={this.props.openSideMenu}
+                iconElementRight={<RightSection />}
+                iconStyleRight={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginTop: 0
+                }}
             />
         )
     }
