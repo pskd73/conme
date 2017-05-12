@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import Nav from "../Nav";
 
 class Index extends Component {
     render() {
         return (
-            <div>Index Page</div>
+            <div>
+                Index page
+            </div>
         );
     }
 }
