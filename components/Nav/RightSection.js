@@ -6,6 +6,10 @@ import { openLoginDialog } from "../actions/ui";
 
 class RightSection extends Component {
 
+    handleLogin() {
+        window.location = "/api/login";
+    }
+
     render() {
         return (
             <div>
@@ -13,9 +17,9 @@ class RightSection extends Component {
                     !this.props.isLoggedIn
                     ?
                         <FlatButton
-                            label="Login"
+                            label="Login with Google"
                             className="nav-button"
-                            onTouchTap={this.props.openLoginDialog} />
+                            onTouchTap={this.handleLogin.bind(this)} />
                     :
                         <div className="nav-right-container">
                             <span className="nav-label">{this.props.username}</span>
@@ -37,12 +41,4 @@ const mapStateToProps = (state) => {
     return state.auth;
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        openLoginDialog: () => {
-            dispatch(openLoginDialog());
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(RightSection);
+export default connect(mapStateToProps, null)(RightSection);

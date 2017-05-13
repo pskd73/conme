@@ -11,6 +11,13 @@ router.get("/login/redirect",
     }
 )
 
+router.get("/bootstrap", function (req, res, next) {
+    res.send({
+        success: true,
+        user: req.user
+    });
+});
+
 router.get("/user", function(req, res, next) {
     setTimeout(function () {
         res.send({
