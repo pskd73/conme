@@ -9,6 +9,7 @@
     "webpack": "webpack --config webpack.config.js"
   },
   "dependencies": {
+    "axios": "^0.16.1",
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
@@ -24,6 +25,7 @@
     "react-router": "^2.8.1",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
+    "redux-axios-middleware": "^4.0.0",
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
