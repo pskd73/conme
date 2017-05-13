@@ -12,7 +12,6 @@ class LoginDialog extends Component {
                 open={this.props.isLoginDialogOpen}
                 onRequestClose={this.props.closeLoginDialog}
                 >
-
                 <span>Login section</span>
             </Dialog>
         )

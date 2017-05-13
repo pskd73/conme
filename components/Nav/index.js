@@ -10,6 +10,7 @@ class Nav extends Component {
             <AppBar
                 title="ConMe"
                 onLeftIconButtonTouchTap={this.props.openSideMenu}
+                showMenuIconButton={false}
                 iconElementRight={<RightSection />}
                 iconStyleRight={{
                     display: "flex",

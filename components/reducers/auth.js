@@ -1,6 +1,8 @@
 const auth = (state = {
-    isLoggedIn: false,
-    username: null,
+    isLoggedIn: true,
+    userId: null,
+    username: "Pramod Kumar",
+    avatar: "/images/mascot.jpg",
 }, action) => {
     switch (action.type) {
         default:
