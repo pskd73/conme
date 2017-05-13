@@ -16,3 +16,14 @@ export const broadcast = (message) => {
         message
     };
 };
+
+export const loadFeed = (userId) => {
+    return {
+        type: "LOAD_FEED",
+        payload: {
+            request: {
+                url: "/user"
+            }
+        }
+    };
+};

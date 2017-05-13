@@ -29,7 +29,7 @@ class FeedCard extends Component {
 export const FeedType = {
     author: PropTypes.string.isRequired,
     avatar: PropTypes.string.isRequired,
-    time: PropTypes.instanceOf(Date).isRequired,
+    time: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired
 };
 

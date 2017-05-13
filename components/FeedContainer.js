@@ -13,9 +13,9 @@ class FeedContainer extends Component {
         return (
             <div>
             {
-                this.props.feeds.map((feed, index) => (
+                this.props.feed.map((feedItem, index) => (
                     <div style={styles.container} key={index}>
-                        <FeedCard {...feed}/>
+                        <FeedCard {...feedItem}/>
                     </div>
                 ))
             }
@@ -25,7 +25,7 @@ class FeedContainer extends Component {
 }
 
 FeedContainer.propTypes = {
-    feeds: PropTypes.arrayOf(PropTypes.shape(FeedType))
+    feed: PropTypes.arrayOf(PropTypes.shape(FeedType))
 };
 
 const mapStateToProps = (state) => {
