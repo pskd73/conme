@@ -1,7 +1,17 @@
-var express = require('express');
+var express = require("express");
+var passport = require("passport");
 var router = express.Router();
 
-router.get('/user', function(req, res, next) {
+router.get("/login", passport.authenticate("google", { scope: ["email"] }));
+
+router.get("/login/redirect",
+    passport.authenticate("google", { failureRedirect: "/login" }),
+    function (req, res, next) {
+        res.redirect("/home")
+    }
+)
+
+router.get("/user", function(req, res, next) {
     setTimeout(function () {
         res.send({
             success: true,
