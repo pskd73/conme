@@ -13,8 +13,8 @@ const auth = (state = {
                 if (data.user) {
                     newState.isLoggedIn = true;
                     newState.userId = data.user._id;
-                    newState.username = data.name;
-                    newState.avatar = data.avatar;
+                    newState.username = data.user.name;
+                    newState.avatar = data.user.avatar;
                 }
                 newState.isBootstrapped = true;
                 return newState;

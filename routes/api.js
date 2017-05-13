@@ -11,6 +11,11 @@ router.get("/login/redirect",
     }
 )
 
+router.get("/logout", function (req, res, next) {
+    req.logout();
+    res.redirect("/");
+});
+
 router.get("/bootstrap", function (req, res, next) {
     res.send({
         success: true,

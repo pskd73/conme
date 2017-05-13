@@ -1,5 +1,4 @@
 const feed = (state = {
-    avatar: "/images/mascot.jpg",
     isMyFeedEnabled: true,
     isFriendsFeedEnabled: true,
     friends: [{

@@ -70,7 +70,10 @@ HomeMenu.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-    return state.feed;
+    const feed = state.feed;
+    return Object.assign({}, feed, {
+        avatar: state.auth.avatar
+    });
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -8,13 +8,21 @@ passport.use(new GoogleStrategy({
         callbackURL: process.env.GOOGLE_CALLBACK_URL
     },
     function(accessToken, refreshToken, profile, done) {
+        const name = profile.displayName;
+        const avatar = profile.photos[0].value.replace(/\?sz=[\d]+/g, "");
+        const email = profile.emails[0].value;
         User.findOne({ googleId: profile.id })
             .then(function (user) {
                 if (user) {
                     return user;
                 }
 
-                var newUser = new User({ googleId: profile.id });
+                var newUser = new User({
+                    avatar,
+                    name,
+                    email,
+                    googleId: profile.id
+                });
                 return newUser.save();
             })
             .then(function (user) {

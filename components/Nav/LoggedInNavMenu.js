@@ -5,6 +5,10 @@ import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 
 class LoggedInNavMenu extends Component {
 
+    handleLogout() {
+        window.location = "/api/logout";
+    }
+
     render() {
         return (
             <IconMenu
@@ -14,7 +18,9 @@ class LoggedInNavMenu extends Component {
                 iconStyle={{color: "#fff"}} >
 
                 <MenuItem primaryText="Settings" />
-                <MenuItem primaryText="Sign out" />
+                <MenuItem
+                    primaryText="Sign out"
+                    onTouchTap={this.handleLogout.bind(this)} />
 
             </IconMenu>
         )

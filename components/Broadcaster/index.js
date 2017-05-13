@@ -56,6 +56,7 @@ class Broadcaster extends Component {
             <Paper style={styles.container} zDepth={1}>
                 <div style={styles.textarea}>
                     <TextField
+                        hintText={"Broadcast you message here..."}
                         name="message"
                         value={this.state.message}
                         fullWidth={true}
