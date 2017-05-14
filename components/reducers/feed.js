@@ -32,6 +32,7 @@ const feed = (state = {
                 isFeedLoading: true
             });
         case "LOAD_FEED_SUCCESS":
+            console.log(action);
             const feed = action.payload.data.data;
             return Object.assign({}, state, {
                 feed,

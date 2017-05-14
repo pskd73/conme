@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var Post = require("./Post");
 
 var UserSchema = mongoose.Schema({
     name: String,
@@ -9,6 +10,10 @@ var UserSchema = mongoose.Schema({
     created_at: Date,
     updated_at: Date
 });
+
+UserSchema.methods.getFeed = function () {
+    return Post.find({ author: { $in: this.following } }, null, { sort: { created_at: -1 } });
+}
 
 UserSchema.pre("save", function(next) {
     const now = new Date();

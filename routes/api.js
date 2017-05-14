@@ -3,6 +3,7 @@ var passport = require("passport");
 var router = express.Router();
 var User = require("../models/User");
 var Post = require("../models/Post");
+var helper = require("../libraries/helper");
 
 router.get("/login", passport.authenticate("google", { scope: ["email"] }));
 
@@ -46,194 +47,19 @@ router.post("/search", function (req, res, next) {
         });
 });
 
-router.get("/user", function(req, res, next) {
-    setTimeout(function () {
-        res.send({
-            success: true,
-            data: [
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-                {
-                    author: "Pramod Kumar",
-                    avatar: "/images/mascot.jpg",
-                    time: new Date(),
-                    message: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
-                },
-            ]
+router.get("/feed", helper.secureRoute, function(req, res, next) {
+    req.user.getFeed()
+        .then(function (feed) {
+            res.send({
+                success: true,
+                data: feed
+            });
+        })
+        .catch(function (err) {
+            res.send({
+                success: false
+            });
         });
-    }, 5000);
 });
 
 module.exports = router;

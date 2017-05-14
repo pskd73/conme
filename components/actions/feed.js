@@ -22,7 +22,7 @@ export const loadFeed = (userId) => {
         type: "LOAD_FEED",
         payload: {
             request: {
-                url: "/user"
+                url: "/feed"
             }
         }
     };
