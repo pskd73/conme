@@ -6,6 +6,7 @@ import {
 import HomeMenu from "../HomeMenu/index";
 import FeedContainer from "../FeedContainer";
 import Broadcaster from "../Broadcaster/index";
+import Search from "../Search/index";
 import { loadFeed } from "../actions/feed";
 
 const styles = {
@@ -51,6 +52,10 @@ class Home extends Component {
                             <div style={styles.loadingContainer}>
                                 <CircularProgress size={80} thickness={5} />
                             </div>
+                        :
+                        this.props.isSearchActive
+                        ?
+                            <Search />
                         : <FeedContainer />
                     }
                 </div>
@@ -60,12 +65,14 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-    isFeedLoading: PropTypes.bool.isRequired
+    isFeedLoading: PropTypes.bool.isRequired,
+    isSearchActive: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
     return {
-        isFeedLoading: state.feed.isFeedLoading
+        isFeedLoading: state.feed.isFeedLoading,
+        isSearchActive: state.feed.isSearchActive
     };
 };
 

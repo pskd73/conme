@@ -27,3 +27,16 @@ export const loadFeed = (userId) => {
         }
     };
 };
+
+export const search = (text) => {
+    return {
+        type: "SEARCH",
+        payload: {
+            request: {
+                url: "/search",
+                method: "post",
+                data: { text }
+            }
+        }
+    };
+};

@@ -1,6 +1,8 @@
 var express = require("express");
 var passport = require("passport");
 var router = express.Router();
+var User = require("../models/User");
+var Post = require("../models/Post");
 
 router.get("/login", passport.authenticate("google", { scope: ["email"] }));
 
@@ -21,6 +23,27 @@ router.get("/bootstrap", function (req, res, next) {
         success: true,
         user: req.user
     });
+});
+
+router.post("/search", function (req, res, next) {
+    var text = req.body.text;
+    var users = User.find({ $or: [{email: new RegExp(text)}, {name: new RegExp(text)}] });
+    var posts = Post.find({ message: new RegExp(text) }).populate("author");
+    Promise.all([users, posts])
+        .then(function (values) {
+            res.send({
+                success: true,
+                data: {
+                    people: values[0],
+                    posts: values[1]
+                }
+            });
+        })
+        .catch(function (err) {
+            res.send({
+                success: false
+            });
+        });
 });
 
 router.get("/user", function(req, res, next) {

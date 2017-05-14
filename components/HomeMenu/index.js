@@ -6,10 +6,11 @@ import {
     Divider,
     Subheader,
     Avatar,
-    Checkbox
+    Checkbox,
+    TextField
 } from "material-ui";
 import CheckIcon from "material-ui/svg-icons/action/check-circle";
-import { toggleFriendsFeed, toggleMyFeed } from "../actions/feed";
+import { toggleFriendsFeed, toggleMyFeed, search } from "../actions/feed";
 
 const styles = {
     profileImageContainer: {
@@ -21,10 +22,34 @@ const styles = {
     },
     subheader: {
         fontFamily: "Roboto, sans-serif"
+    },
+    searchContainer: {
+        padding: "5px 15px"
     }
 }
 
 class HomeMenu extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchText: ""
+        }
+    }
+
+    checkForEnter(event) {
+        if (event.charCode === 13) {
+            this.handleSearch();
+        }
+    }
+
+    handleSearch() {
+        this.props.search(this.state.searchText);
+    }
+
+    handleSearchTextChange(event, searchText) {
+        this.setState({ searchText });
+    }
 
     render() {
         return (
@@ -41,6 +66,15 @@ class HomeMenu extends Component {
                         primaryText="My Feed"
                         leftCheckbox={<Checkbox checked={this.props.isMyFeedEnabled} onCheck={this.props.toggleMyFeed} />} />
                 </List>
+                <Divider />
+                <Subheader>Search</Subheader>
+                <div style={styles.searchContainer}>
+                    <TextField
+                        value={this.state.searchText}
+                        hintText="Anything.."
+                        onChange={this.handleSearchTextChange.bind(this)}
+                        onKeyPress={this.checkForEnter.bind(this)} />
+                </div>
                 <Divider />
                 <Subheader>Friends</Subheader>
                 <List>
@@ -83,6 +117,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         toggleMyFeed: () => {
             dispatch(toggleMyFeed());
+        },
+        search: (text) => {
+            dispatch(search(text));
         }
     }
 }
