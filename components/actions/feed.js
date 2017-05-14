@@ -40,3 +40,29 @@ export const search = (text) => {
         }
     };
 };
+
+export const follow = (id) => {
+    return {
+        type: "FOLLOW",
+        payload: {
+            request: {
+                url: "/follow",
+                method: "post",
+                data: { id }
+            }
+        }
+    };
+};
+
+export const unfollow = (id) => {
+    return {
+        type: "UNFOLLOW",
+        payload: {
+            request: {
+                url: "/unfollow",
+                method: "post",
+                data: { id }
+            }
+        }
+    };
+};

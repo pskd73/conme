@@ -20,10 +20,25 @@ router.get("/logout", function (req, res, next) {
 });
 
 router.get("/bootstrap", function (req, res, next) {
-    res.send({
-        success: true,
-        user: req.user
-    });
+    if (req.user) {
+        req.user.getFollowing()
+            .then(function (users) {
+                res.send({
+                    success: true,
+                    data: {
+                        users,
+                        user: req.user
+                    }
+                });
+            });
+    } else {
+        res.send({
+            success: true,
+            data: {
+                user: null
+            }
+        });
+    }
 });
 
 router.post("/search", function (req, res, next) {
@@ -47,7 +62,7 @@ router.post("/search", function (req, res, next) {
         });
 });
 
-router.get("/feed", helper.secureRoute, function(req, res, next) {
+router.get("/feed", helper.secureRoute, function (req, res, next) {
     req.user.getFeed()
         .then(function (feed) {
             res.send({
@@ -58,6 +73,58 @@ router.get("/feed", helper.secureRoute, function(req, res, next) {
         .catch(function (err) {
             res.send({
                 success: false
+            });
+        });
+});
+
+router.post("/follow", helper.secureRoute, function (req, res, next) {
+    req.user.follow(req.body.id)
+        .then((user) => {
+            res.send({
+                success: user && true,
+                data: {
+                    id: req.body.id
+                }
+            });
+        })
+        .catch((error) => {
+            res.send({
+                success: false,
+                data: {
+                    id: req.body.id
+                }
+            });
+        });
+});
+
+router.post("/unfollow", helper.secureRoute, function (req, res, next) {
+    req.user.unfollow(req.body.id)
+        .then((user) => {
+            res.send({
+                success: user && true,
+                data: {
+                    id: req.body.id
+                }
+            });
+        })
+        .catch((error) => {
+            res.send({
+                success: false,
+                data: {
+                    id: req.body.id
+                }
+            });
+        });
+});
+
+router.get("/following", helper.secureRoute, function (req, res, next) {
+    req.user.getFollowing()
+        .then(function (users) {
+            res.send({
+                success: true,
+                data: {
+                    users
+                }
             });
         });
 });

@@ -7,10 +7,12 @@ import {
     Subheader,
     Avatar,
     Checkbox,
-    TextField
+    TextField,
+    MenuItem
 } from "material-ui";
 import CheckIcon from "material-ui/svg-icons/action/check-circle";
 import { toggleFriendsFeed, toggleMyFeed, search } from "../actions/feed";
+import { gotoHome } from "../actions/ui";
 
 const styles = {
     profileImageContainer: {
@@ -51,6 +53,10 @@ class HomeMenu extends Component {
         this.setState({ searchText });
     }
 
+    handleHome() {
+        this.props.gotoHome();
+    }
+
     render() {
         return (
             <div>
@@ -59,12 +65,9 @@ class HomeMenu extends Component {
                 </div>
                 <Subheader>Filters</Subheader>
                 <List>
-                    <ListItem
-                        primaryText="Friends Feed"
-                        leftCheckbox={<Checkbox checked={this.props.isFriendsFeedEnabled} onCheck={this.props.toggleFriendsFeed} />} />
-                    <ListItem
-                        primaryText="My Feed"
-                        leftCheckbox={<Checkbox checked={this.props.isMyFeedEnabled} onCheck={this.props.toggleMyFeed} />} />
+                    <MenuItem
+                        onTouchTap={this.handleHome.bind(this)}
+                        primaryText="Home" />
                 </List>
                 <Divider />
                 <Subheader>Search</Subheader>
@@ -76,10 +79,10 @@ class HomeMenu extends Component {
                         onKeyPress={this.checkForEnter.bind(this)} />
                 </div>
                 <Divider />
-                <Subheader>Friends</Subheader>
+                <Subheader>Following</Subheader>
                 <List>
                     {
-                        this.props.friends.map((friend, index) => (
+                        this.props.following.map((friend, index) => (
                             <ListItem
                                 key={index}
                                 leftAvatar={<Avatar src={friend.avatar} />}
@@ -95,19 +98,23 @@ class HomeMenu extends Component {
 
 HomeMenu.propTypes = {
     avatar: PropTypes.string.isRequired,
-    isMyFeedEnabled: PropTypes.bool.isRequired,
-    isFriendsFeedEnabled: PropTypes.bool.isRequired,
-    friends: PropTypes.arrayOf(PropTypes.shape({
+    following: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
         avatar: PropTypes.string.isRequired
     })).isRequired
 }
 
 const mapStateToProps = (state) => {
-    const feed = state.feed;
-    return Object.assign({}, feed, {
-        avatar: state.auth.avatar
+    const following = state.auth.following.map((user) => {
+        return {
+            name: user.name,
+            avatar: user.avatar
+        };
     });
+    return {
+        following,
+        avatar: state.auth.avatar
+    };
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -120,6 +127,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         search: (text) => {
             dispatch(search(text));
+        },
+        gotoHome: () => {
+            dispatch(gotoHome());
         }
     }
 }

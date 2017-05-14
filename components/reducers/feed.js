@@ -32,7 +32,6 @@ const feed = (state = {
                 isFeedLoading: true
             });
         case "LOAD_FEED_SUCCESS":
-            console.log(action);
             const feed = action.payload.data.data;
             return Object.assign({}, state, {
                 feed,
@@ -55,6 +54,10 @@ const feed = (state = {
             return Object.assign({}, state, {
                 isSearchActive: false,
                 isFeedLoading: false
+            });
+        case "GOTO_HOME":
+            return Object.assign({}, state, {
+                isSearchActive: false
             });
         default:
             return state;

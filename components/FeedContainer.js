@@ -29,7 +29,16 @@ FeedContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    return state.feed;
+    let feed = state.feed.feed;
+    feed = feed.map((f) => {
+        return {
+            author: f.author.name,
+            avatar: f.author.avatar,
+            time: f.created_at,
+            message: f.message
+        };
+    });
+    return { feed };
 }
 
 export default connect(mapStateToProps, null)(FeedContainer);

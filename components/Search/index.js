@@ -4,9 +4,14 @@ import {
     Subheader,
     List,
     ListItem,
-    Avatar
+    Avatar,
+    IconMenu,
+    MenuItem,
+    IconButton
 } from "material-ui";
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import FeedCard, { FeedType } from "../FeedCard/index";
+import { follow, unfollow } from "../actions/feed";
 
 const styles = {
     header: {
@@ -14,7 +19,21 @@ const styles = {
     }
 };
 
+const iconButtonElement = (
+  <IconButton>
+    <MoreVertIcon />
+  </IconButton>
+);
+
 class Search extends Component {
+
+    handleFollow(id) {
+        this.props.follow(id);
+    }
+
+    handleUnfollow(id) {
+        this.props.unfollow(id);
+    }
 
     render() {
         return (
@@ -29,7 +48,24 @@ class Search extends Component {
                                 <ListItem
                                     key={index}
                                     primaryText={person.username}
-                                    leftAvatar={<Avatar src={person.avatar} />}/>
+                                    leftAvatar={<Avatar src={person.avatar} />}
+                                    rightIconButton={
+                                        person.id != this.props.userId
+                                        ?
+                                            <IconMenu iconButtonElement={iconButtonElement}>
+                                                {
+                                                    this.props.followingIds.indexOf(person.id) !== -1
+                                                    ? <MenuItem
+                                                        onTouchTap={this.handleUnfollow.bind(this, person.id)}
+                                                        >Unfollow</MenuItem>
+                                                    : <MenuItem
+                                                        onTouchTap={this.handleFollow.bind(this, person.id)}
+                                                        >Follow</MenuItem>
+                                                }
+                                            </IconMenu>
+                                        : null
+                                    }
+                                    />
                             ))
                         :
                             <div style={{padding: "0px 15px"}}>Oops!! No results</div>
@@ -60,7 +96,9 @@ Search.propTypes = {
         username: PropTypes.string.isRequired,
         id: PropTypes.string.isRequired
     })).isRequired,
-    searchResultPosts: PropTypes.arrayOf(PropTypes.shape(FeedType)).isRequired
+    searchResultPosts: PropTypes.arrayOf(PropTypes.shape(FeedType)).isRequired,
+    followingIds: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    userId: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -72,7 +110,6 @@ const mapStateToProps = (state) => {
         };
     });
     const posts = state.feed.searchResultPosts.map((post) => {
-        console.log(post);
         return {
             author: post.author.name,
             time: post.created_at,
@@ -83,8 +120,21 @@ const mapStateToProps = (state) => {
     return {
         searchText: state.feed.searchText,
         searchResultPeople: people,
-        searchResultPosts: posts
+        searchResultPosts: posts,
+        followingIds: state.auth.followingIds,
+        userId: state.auth.userId
     }
 }
 
-export default connect(mapStateToProps, null)(Search);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        follow: (id) => {
+            dispatch(follow(id));
+        },
+        unfollow: (id) => {
+            dispatch(unfollow(id));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

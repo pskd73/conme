@@ -21,3 +21,9 @@ export const closeLoginDialog = () => {
         type: "CLOSE_LOGIN_DIALOG"
     };
 };
+
+export const gotoHome = () => {
+    return {
+        type: "GOTO_HOME"
+    };
+};

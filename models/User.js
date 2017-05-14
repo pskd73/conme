@@ -12,7 +12,42 @@ var UserSchema = mongoose.Schema({
 });
 
 UserSchema.methods.getFeed = function () {
-    return Post.find({ author: { $in: this.following } }, null, { sort: { created_at: -1 } });
+    return Post.find({ author: { $in: this.following } }, null, { sort: { created_at: -1 } }).populate("author");
+}
+
+UserSchema.methods.follow = function (id) {
+    var self = this;
+    return User.findById(id)
+        .then(function (user) {
+            if (user) {
+                if (self.following.indexOf(user._id) === -1) {
+                    self.following.push(user._id);
+                    return self.save();
+                }
+            }
+            return false;
+        });
+}
+
+UserSchema.methods.unfollow = function (id) {
+    var self = this;
+    return User.findById(id)
+        .then(function (user) {
+            if (user) {
+                var index = self.following.indexOf(user._id);
+                if (index !== -1) {
+                    console.log(self.following);
+                    self.following.splice(index, 1);
+                    console.log(self.following);
+                    return self.save();
+                }
+            }
+            return false;
+        });
+}
+
+UserSchema.methods.getFollowing = function () {
+    return User.find({ _id: { $in: this.following } });
 }
 
 UserSchema.pre("save", function(next) {
