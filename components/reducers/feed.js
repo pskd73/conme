@@ -1,10 +1,6 @@
 const feed = (state = {
     isMyFeedEnabled: true,
     isFriendsFeedEnabled: true,
-    friends: [{
-        name: "Sreedevi",
-        avatar: "/images/mascot.jpg"
-    }],
     feed: [],
     isFeedLoading: false,
     isSearchActive: false,
@@ -21,9 +17,10 @@ const feed = (state = {
             return Object.assign({}, state, {
                 isMyFeedEnabled: !state.isMyFeedEnabled
             });
-        case "BROADCAST":
+        case "BROADCAST_SUCCESS":
             const newFeed = state.feed.splice(0);
-            newFeed.unshift(action.message);
+            const post = action.payload.data.data.post;
+            newFeed.unshift(post);
             return Object.assign({}, state, {
                 feed: newFeed
             });

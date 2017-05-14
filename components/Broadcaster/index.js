@@ -43,12 +43,8 @@ class Broadcaster extends Component {
     }
 
     handleBroadcast() {
-        this.props.broadcast({
-            author: this.props.username,
-            avatar: this.props.avatar,
-            time: (new Date()).toString(),
-            message: this.state.message
-        });
+        this.props.broadcast(this.state.message);
+        this.setState({ message: "" });
     }
 
     render() {

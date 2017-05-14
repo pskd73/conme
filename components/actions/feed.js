@@ -10,13 +10,6 @@ export const toggleMyFeed = () => {
     };
 };
 
-export const broadcast = (message) => {
-    return {
-        type: "BROADCAST",
-        message
-    };
-};
-
 export const loadFeed = (userId) => {
     return {
         type: "LOAD_FEED",
@@ -62,6 +55,19 @@ export const unfollow = (id) => {
                 url: "/unfollow",
                 method: "post",
                 data: { id }
+            }
+        }
+    };
+};
+
+export const broadcast = (message) => {
+    return {
+        type: "BROADCAST",
+        payload: {
+            request: {
+                url: "/broadcast",
+                method: "post",
+                data: { message }
             }
         }
     };

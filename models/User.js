@@ -12,7 +12,8 @@ var UserSchema = mongoose.Schema({
 });
 
 UserSchema.methods.getFeed = function () {
-    return Post.find({ author: { $in: this.following } }, null, { sort: { created_at: -1 } }).populate("author");
+    var list = [...this.following, this._id];
+    return Post.find({ author: { $in: list } }, null, { sort: { created_at: -1 } }).populate("author");
 }
 
 UserSchema.methods.follow = function (id) {

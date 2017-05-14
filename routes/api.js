@@ -129,4 +129,21 @@ router.get("/following", helper.secureRoute, function (req, res, next) {
         });
 });
 
+router.post("/broadcast", helper.secureRoute, function (req, res, next) {
+    var post = new Post({
+        author: req.user._id,
+        message: req.body.message
+    });
+    post.save()
+        .then(function (post) {
+            post.author = req.user;
+            res.send({
+                success: true,
+                data: {
+                    post
+                }
+            });
+        });
+});
+
 module.exports = router;
