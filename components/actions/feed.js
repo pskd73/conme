@@ -10,7 +10,7 @@ export const toggleMyFeed = () => {
     };
 };
 
-export const loadFeed = (userId) => {
+export const loadFeed = () => {
     return {
         type: "LOAD_FEED",
         payload: {

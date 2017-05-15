@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
     CircularProgress
 } from "material-ui";
+import { browserHistory } from "react-router";
 import HomeMenu from "../HomeMenu/index";
 import FeedContainer from "../FeedContainer";
 import Broadcaster from "../Broadcaster/index";
@@ -35,7 +36,13 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.props.loadFeed(123);
+        this.props.loadFeed();
+    }
+
+    componentWillMount() {
+        if (!this.props.isLoggedIn) {
+            browserHistory.push("/");
+        }
     }
 
     render() {
@@ -66,20 +73,22 @@ class Home extends Component {
 
 Home.propTypes = {
     isFeedLoading: PropTypes.bool.isRequired,
-    isSearchActive: PropTypes.bool.isRequired
+    isSearchActive: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => {
     return {
         isFeedLoading: state.feed.isFeedLoading,
-        isSearchActive: state.feed.isSearchActive
+        isSearchActive: state.feed.isSearchActive,
+        isLoggedIn: state.auth.isLoggedIn
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadFeed: (userId) => {
-            dispatch(loadFeed(userId));
+        loadFeed: () => {
+            dispatch(loadFeed());
         }
     }
 }

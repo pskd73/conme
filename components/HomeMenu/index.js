@@ -63,7 +63,7 @@ class HomeMenu extends Component {
                 <div style={styles.profileImageContainer}>
                     <img style={styles.profileImage} src={this.props.avatar} />
                 </div>
-                <Subheader>Filters</Subheader>
+                <Subheader>Links</Subheader>
                 <List>
                     <MenuItem
                         onTouchTap={this.handleHome.bind(this)}

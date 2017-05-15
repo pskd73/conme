@@ -17,7 +17,6 @@ class LoggedInNavMenu extends Component {
                 targetOrigin={{horizontal: "left", vertical: "top"}}
                 iconStyle={{color: "#fff"}} >
 
-                <MenuItem primaryText="Settings" />
                 <MenuItem
                     primaryText="Sign out"
                     onTouchTap={this.handleLogout.bind(this)} />
